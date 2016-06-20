@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="C:/Users/Manuel/Desktop/CaravanOS.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/CaravanOS/export.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=CaravanOS/src&lt;me.lordmampf.CaravanOS{Main.java[Main" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=CaravanOS/src"/>
+        <file path="/CaravanOS/.gitignore"/>
+        <file path="/CaravanOS/.project"/>
+        <file path="/CaravanOS/build.fxbuild"/>
+        <file path="/CaravanOS/.classpath"/>
+    </selectedElements>
+</jardesc>

@@ -56,8 +56,8 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 
-		//		mStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		//		mStage.setFullScreen(true);
+		mStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		mStage.setFullScreen(true);
 
 	}
 
