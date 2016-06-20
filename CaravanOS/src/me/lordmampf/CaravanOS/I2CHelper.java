@@ -1,7 +1,5 @@
 package me.lordmampf.CaravanOS;
 
-import java.io.IOException;
-
 import javafx.scene.paint.Color;
 
 public class I2CHelper {
@@ -33,10 +31,10 @@ public class I2CHelper {
 		sendToArduino(value);
 	}
 
-	public static void setColor(int pFirstPin, Color pColor) {
-		setPWM(pFirstPin, (int) (pColor.getRed() * 255));
-		setPWM(pFirstPin + 1, (int) (pColor.getGreen() * 255));
-		setPWM(pFirstPin + 2, (int) (pColor.getBlue() * 255));
+	public static void setColor(int pPinR, int pPinG, int pPinB, Color pColor) {
+		setPWM(pPinR, (int) (pColor.getRed() * 255));
+		setPWM(pPinG, (int) (pColor.getGreen() * 255));
+		setPWM(pPinB, (int) (pColor.getBlue() * 255));
 	}
 
 	public static void setPWM(int pPin, int pValue) {

@@ -49,7 +49,7 @@ public class LedStripes implements IInitializeable {
 			sp.setBackground(b);
 			myCustomColorPicker.setBackground(b);
 
-			I2CHelper.setColor(5, pNewValue);
+			I2CHelper.setColor(3, 5, 6, pNewValue);
 		});
 
 		slider.valueProperty().addListener((obs, pOldValue, pNewValue) -> {
