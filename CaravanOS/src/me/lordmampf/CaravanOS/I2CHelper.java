@@ -1,8 +1,43 @@
 package me.lordmampf.CaravanOS;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import javafx.scene.paint.Color;
 
 public class I2CHelper {
+
+	private static Queue<Integer> mSendQueue = new ConcurrentLinkedQueue<Integer>();
+
+	private static Runnable mRunnable = new Runnable() {
+		public void run() {
+
+			while (true) {
+				while (!mSendQueue.isEmpty()) {
+					final Integer data = mSendQueue.poll();
+					System.out.println(String.format("%16s", Integer.toBinaryString(data)).replace(" ", "0"));
+
+					try {
+						Process p = Runtime.getRuntime().exec("/usr/bin/python /home/manu/Desktop/i2c.py " + data);
+						p.waitFor();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	};
+
+	private static Thread mRunningThread = new Thread(mRunnable);
+
+	static {
+		mRunningThread.start();
+	}
 
 	//@formatter:off
 	/*
@@ -49,13 +84,7 @@ public class I2CHelper {
 	}
 
 	private static void sendToArduino(int pData) {
-		System.out.println(String.format("%16s", Integer.toBinaryString(pData)).replace(" ", "0"));
-		try {
-			Process p = Runtime.getRuntime().exec("/usr/bin/python /home/manu/Desktop/i2c.py " + pData);
-			p.waitFor();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		mSendQueue.add(pData);
 	}
 
 }

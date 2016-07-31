@@ -4,12 +4,17 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import me.lordmampf.CaravanOS.Scenes.MainMenu;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 public class Main extends Application {
 
@@ -22,6 +27,7 @@ public class Main extends Application {
 			mStage.setTitle("CaravanOS");
 
 			StackPane root = new StackPane();
+
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("color.css").toExternalForm());
 
@@ -57,7 +63,7 @@ public class Main extends Application {
 		}
 
 		mStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		mStage.setFullScreen(true);
+		//mStage.setFullScreen(true);
 
 	}
 

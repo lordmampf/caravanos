@@ -9,6 +9,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import me.lordmampf.CaravanOS.I2CHelper;
 import me.lordmampf.CaravanOS.IInitializeable;
 import me.lordmampf.CaravanOS.Main;
@@ -47,8 +48,10 @@ public class LedStripes implements IInitializeable {
 			Background b = new Background(new BackgroundFill(pNewValue, CornerRadii.EMPTY, Insets.EMPTY));
 			pPane.setBackground(b);
 			sp.setBackground(b);
+
 			myCustomColorPicker.setBackground(b);
 
+			((StackPane) Main.mStage.getScene().getRoot()).setBackground(b);
 			I2CHelper.setColor(3, 5, 6, pNewValue);
 		});
 
