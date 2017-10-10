@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="C:/Users/Manuel/Desktop/CaravanOS.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/CaravanOSSwing/export.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=CaravanOSSwing/src&lt;me.lordmampf.CaravanOS{Main.java[Main" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/CaravanOSSwing/.classpath"/>
+        <file path="/CaravanOSSwing/.project"/>
+        <javaElement handleIdentifier="=CaravanOSSwing/src"/>
+    </selectedElements>
+</jardesc>

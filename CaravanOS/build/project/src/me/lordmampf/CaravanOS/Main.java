@@ -52,13 +52,14 @@ public class Main extends Application {
 			rootpane.getChildren().clear();
 			rootpane.getChildren().add(pane);
 
-			mStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-			//mStage.setFullScreen(true);
-
 		} catch (IOException e) {
 			System.err.println("Error loading EventHandlerDemo.fxml!");
 			e.printStackTrace();
 		}
+
+		mStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		//mStage.setFullScreen(true);
+
 	}
 
 	public static void main(String[] args) {
