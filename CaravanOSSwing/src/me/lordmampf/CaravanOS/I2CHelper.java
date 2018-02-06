@@ -1,40 +1,55 @@
 package me.lordmampf.CaravanOS;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class I2CHelper {
 
-	private static Queue<Integer> mSendQueue = new ConcurrentLinkedQueue<Integer>();
+	private static Queue<String> mSendQueue = new ConcurrentLinkedQueue<String>();
 
 	private static Runnable mRunnable = new Runnable() {
 		public void run() {
 
+			runComamnd("/home/led/init.sh");
+
 			while (true) {
 				while (!mSendQueue.isEmpty()) {
-					final Integer data = mSendQueue.poll();
-					System.out.println(String.format("%16s", Integer.toBinaryString(data)).replace(" ", "0"));
-
-					if (!System.getProperty("os.name").toLowerCase().contains("win")) {
-						try {
-							Process p = Runtime.getRuntime().exec("/usr/bin/python /home/manu/Desktop/i2c.py " + data);
-							p.waitFor();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
-					}
+					final String cmd = mSendQueue.poll();
+					runComamnd("/home/led/pwm.sh " + cmd);
 				}
 
 				try {
-					Thread.sleep(300);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	};
+
+	private static void runComamnd(String pCommand) {
+		System.out.println("runComamnd " + pCommand);
+
+		if (!System.getProperty("os.name").toLowerCase().contains("win")) {
+			try {
+				Process p = Runtime.getRuntime().exec(pCommand);
+
+				BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				String line;
+				while ((line = in.readLine()) != null) {
+					System.out.println(line);
+				}
+
+				p.waitFor();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	private static Thread mRunningThread = new Thread(mRunnable);
 
@@ -43,52 +58,23 @@ public class I2CHelper {
 		mRunningThread.start();
 	}
 
-	//@formatter:off
-	/*
-	 * 2 byte will be transferred
-	 * TT11 PPPP XXXX XXXX
-	 *
-	 * TT is Type
-	 *     00 Set Pin to high or low
-	 * 	   01 Set PWM to Pin
-	 * PPPP Pin
-	 * 	   0001 is Pin 1 etc.
-	 * 
-	 * XXXX XXXX Data
-	 *     if set high or low
-	 *     if PWM 0- 256 Value
-	 */
-	//@formatter:on
-
-	public static void set(int pPin, boolean pHigh) {
-		int value = 0b0111000000000000;
-
-		if (pHigh)
-			value |= 1;
-
-		value |= pPin << 8;
-		sendToArduino(value);
-	}
-
 	public static void setColor(int pPinR, int pPinG, int pPinB, Color pColor) {
 		setPWM(pPinR, pColor.getRed());
 		setPWM(pPinG, pColor.getGreen());
 		setPWM(pPinB, pColor.getBlue());
 	}
 
+	private static int map(int x, int in_min, int in_max, int out_min, int out_max) {
+		return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+	}
+
 	public static void setPWM(int pPin, int pValue) {
 		if (pValue < 0 || pValue > 255)
 			return; //maybe exception
 
-		int value = 0b0111000000000000;
-		value |= pValue;
-		value |= pPin << 8;
+		pValue = map(pValue, 0, 255, 14, 24);
 
-		sendToArduino(value);
-	}
-
-	private static void sendToArduino(int pData) {
-		mSendQueue.add(pData);
+		mSendQueue.add(pPin + " " + pValue);
 	}
 
 }

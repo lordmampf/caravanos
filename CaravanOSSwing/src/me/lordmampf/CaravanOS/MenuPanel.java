@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 
 	private JButton mButton1, mButton2;
 
-	public MenuPanel(int pWidth, int pHeight) {
+	public MenuPanel() {
 
 		GridLayout layout = new GridLayout(6, 1);
 
@@ -30,12 +30,12 @@ public class MenuPanel extends JPanel implements ActionListener {
 
 		JLabel lbl = new JLabel("Herzlich Willkommen!");
 		lbl.setFont(new Font("Serif", Font.PLAIN, 40));
-		lbl.setMinimumSize(new Dimension(WIDTH, pHeight / 2));
+		//		lbl.setMinimumSize(new Dimension(WIDTH, pHeight / 2));
 		lbl.setBackground(Color.RED);
 		lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
-		mButton1 = new JButton("Beleuchtung 1");
-		mButton2 = new JButton("Beleuchtung 2");
+		mButton1 = new JButton(CurrentData.getTitle(0));
+		mButton2 = new JButton(CurrentData.getTitle(1));
 		JButton exit = new JButton("Beenden");
 
 		mButton1.addActionListener(this);
@@ -64,10 +64,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 		}
 
 		SwingUtilities.invokeLater(() -> {
-			Main.mMainFrame.getContentPane().removeAll();
-			Main.mMainFrame.add(new ColorPanel(Main.WIDTH, Main.HEIGHT));
-			Main.mMainFrame.pack();
-			Main.mMainFrame.setSize(Main.WIDTH, Main.HEIGHT);
+			Main.setPanel(new LedStripePanel());
 		});
 	}
 

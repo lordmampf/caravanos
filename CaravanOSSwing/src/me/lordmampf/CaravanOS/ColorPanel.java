@@ -2,21 +2,24 @@ package me.lordmampf.CaravanOS;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-public class ColorPanel extends JPanel {
+public class ColorPanel extends JPanel implements ComponentListener {
 	private static final long serialVersionUID = 1L;
 
 	private BufferedImage mImage;
 	private int[] mPins;
 
-	public ColorPanel(int pWidth, int pHeight) {
+	public ColorPanel() {
 
-		mImage = getColorGradient(pWidth, pHeight);
+		//	mImage = getColorGradient(pWidth, pHeight);
 
 		mPins = CurrentData.mConfigPins[CurrentData.mCurrentLight];
 
@@ -40,11 +43,24 @@ public class ColorPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int rgb = mImage.getRGB(e.getX(), e.getY());
-				Color c = new Color(rgb);
-				I2CHelper.setColor(mPins[0], mPins[1], mPins[2], c);
+				updateColor(e.getX(), e.getY());
 			};
 		});
+
+		addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				updateColor(e.getX(), e.getY());
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				updateColor(e.getX(), e.getY());
+			}
+		});
+
+		addComponentListener(this);
 	}
 
 	@Override
@@ -75,6 +91,32 @@ public class ColorPanel extends JPanel {
 
 	public int fromRGB(int r, int g, int b) {
 		return ((r & 0x0ff) << 16) | ((g & 0x0ff) << 8) | (b & 0x0ff);
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+
+	}
+
+	@Override
+	public void componentResized(ComponentEvent arg0) {
+		mImage = getColorGradient(getWidth(), getHeight());
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+
+	}
+
+	private void updateColor(int pX, int pY) {
+		int rgb = mImage.getRGB(pX, pY);
+		Color c = new Color(rgb);
+		I2CHelper.setColor(mPins[0], mPins[1], mPins[2], c);
 	}
 
 }
