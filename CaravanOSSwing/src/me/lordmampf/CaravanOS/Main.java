@@ -7,6 +7,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JFrame;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main {
 
@@ -14,6 +17,7 @@ public class Main {
 
 		System.out.println("init..");
 
+		I2CHelper.init();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
@@ -29,23 +33,30 @@ public class Main {
 
 	private static void createAndShowGUI() {
 
-		//Create and set up the window.
-	//	mMainFrame = new FullscreenFrame("CaravanOS");
-	//	mMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Create and set up the window.
+		//	mMainFrame = new FullscreenFrame("CaravanOS");
+		//	mMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mMainFrame = new JFrame("CaravanOS");
+		
 		setPanel(new MenuPanel());
 	}
 
-	public static void setPanel(Component pPanel) {
-		
-		mMainFrame = new FullscreenFrame("CaravanOS");
+	public static void setPanel(Component pPanel) {	
 		mMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
 		mMainFrame.getContentPane().removeAll();
 		mMainFrame.getContentPane().add(pPanel);
-		
-	//	mMainFrame.pack();
+
+		//	mMainFrame.pack();
 		/*
 		 * mMainFrame.setVisible(true);
 		 * mMainFrame.setResizable(true);
@@ -56,12 +67,13 @@ public class Main {
 
 	}
 
-	static public boolean fullScreen(final JFrame frame, boolean doPack) {
+	public static boolean fullScreen(final JFrame frame, boolean doPack) {
 
 		GraphicsDevice device = frame.getGraphicsConfiguration().getDevice();
 		boolean result = device.isFullScreenSupported();
 
 		if (result) {
+			frame.dispose();
 			frame.setUndecorated(true);
 			frame.setResizable(true);
 
@@ -81,6 +93,7 @@ public class Main {
 			if (doPack)
 				frame.pack();
 
+			frame.setVisible(true);
 			device.setFullScreenWindow(frame);
 		} else {
 			frame.setPreferredSize(frame.getGraphicsConfiguration().getBounds().getSize());

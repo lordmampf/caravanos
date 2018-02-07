@@ -30,6 +30,11 @@ public class I2CHelper {
 		}
 	};
 
+	public static void init() {
+		mRunningThread.setDaemon(true);
+		mRunningThread.start();
+	}
+
 	private static void runComamnd(String pCommand) {
 		System.out.println("runComamnd " + pCommand);
 
@@ -53,11 +58,6 @@ public class I2CHelper {
 
 	private static Thread mRunningThread = new Thread(mRunnable);
 
-	static {
-		mRunningThread.setDaemon(true);
-		mRunningThread.start();
-	}
-
 	public static void setColor(int pPinR, int pPinG, int pPinB, Color pColor) {
 		setPWM(pPinR, pColor.getRed());
 		setPWM(pPinG, pColor.getGreen());
@@ -72,7 +72,8 @@ public class I2CHelper {
 		if (pValue < 0 || pValue > 255)
 			return; //maybe exception
 
-		pValue = map(pValue, 0, 255, 14, 24);
+		if (pValue != 0)
+			pValue = map(pValue, 0, 255, 14, 25);
 
 		mSendQueue.add(pPin + " " + pValue);
 	}

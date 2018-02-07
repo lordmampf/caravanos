@@ -20,26 +20,36 @@ public class MenuPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JButton mButton1, mButton2;
+	private JButton mButton1, mButton2, mButton3;
+
+	private static final int mTextSize = 40;
 
 	public MenuPanel() {
 
-		GridLayout layout = new GridLayout(6, 1);
+		GridLayout layout = new GridLayout(7, 1);
 
 		setLayout((LayoutManager) layout);
 
-		JLabel lbl = new JLabel("Herzlich Willkommen!");
+		JLabel lbl = new JLabel("Wohnwagen Halts Maul!");
 		lbl.setFont(new Font("Serif", Font.PLAIN, 40));
+
 		//		lbl.setMinimumSize(new Dimension(WIDTH, pHeight / 2));
 		lbl.setBackground(Color.RED);
 		lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 		mButton1 = new JButton(CurrentData.getTitle(0));
 		mButton2 = new JButton(CurrentData.getTitle(1));
+		mButton3 = new JButton(CurrentData.getTitle(2));
 		JButton exit = new JButton("Beenden");
+
+		mButton1.setFont(new Font("Serif", Font.PLAIN, mTextSize));
+		mButton2.setFont(new Font("Serif", Font.PLAIN, mTextSize));
+		mButton3.setFont(new Font("Serif", Font.PLAIN, mTextSize));
+		exit.setFont(new Font("Serif", Font.PLAIN, mTextSize));
 
 		mButton1.addActionListener(this);
 		mButton2.addActionListener(this);
+		mButton3.addActionListener(this);
 
 		exit.addActionListener(new ActionListener() {
 			@Override
@@ -52,6 +62,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 		add(Box.createHorizontalGlue());
 		add(mButton1);
 		add(mButton2);
+		add(mButton3);
 		add(Box.createHorizontalGlue());
 		add(exit);
 	}
@@ -61,6 +72,8 @@ public class MenuPanel extends JPanel implements ActionListener {
 			CurrentData.mCurrentLight = 0;
 		} else if (pActionEvent.getSource() == mButton2) {
 			CurrentData.mCurrentLight = 1;
+		} else if (pActionEvent.getSource() == mButton3) {
+			CurrentData.mCurrentLight = 2;
 		}
 
 		SwingUtilities.invokeLater(() -> {

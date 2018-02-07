@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 public class LedStripePanel extends JPanel implements ActionListener, ChangeListener {
 
@@ -40,7 +41,7 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 			//			lbl.setMinimumSize(new Dimension(WIDTH, pHeight / 2));
 			lbl.setBackground(Color.RED);
 			//	lbl.setHorizontalAlignment(SwingConstants.CENTER);
-
+						
 			GridBagConstraints c = new GridBagConstraints();
 			c.anchor = GridBagConstraints.PAGE_START;
 			c.fill = GridBagConstraints.HORIZONTAL;
@@ -68,6 +69,7 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 		{
 
 			mSlider = new JSlider(JSlider.VERTICAL, 0, 255, 0);
+			mSlider.setPreferredSize(new Dimension(50, 0));
 			mSlider.addChangeListener(this);
 			mSlider.setMajorTickSpacing(10);
 			mSlider.setPaintTicks(true);
@@ -80,41 +82,64 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 			c.gridx = 4;
 			c.gridy = 2;
 			//	c.gridwidth = 3;
+
+			BasicSliderUI sliderUI = new javax.swing.plaf.basic.BasicSliderUI(mSlider) {
+				protected Dimension getThumbSize() {
+					return new Dimension(60, 40);
+				}
+
+				public void paintThumb(Graphics g) {
+					//	g.setColor(Color.RED);
+					super.paintThumb(g);
+
+				};
+			};
+			mSlider.setUI(sliderUI);
+
 			add(mSlider, c);
 		}
+		/*
+		 * {
+		 * JButton btn1 = new JButton("Licht ein");
+		 * btn1.addActionListener(this);
+		 * GridBagConstraints c = new GridBagConstraints();
+		 * c.fill = GridBagConstraints.HORIZONTAL;
+		 * c.weightx = 1;
+		 * c.gridx = 0;
+		 * c.gridy = 3;
+		 * add(btn1, c);
+		 * }
+		 */
 
 		{
-			JButton btn1 = new JButton("Licht ein");
-			btn1.addActionListener(this);
+			JButton btn2 = new JButton("Licht aus");
+			btn2.setPreferredSize(new Dimension(0, 90));
+			btn2.setFont(new Font("Serif", Font.PLAIN, 40));
+
+			btn2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					I2CHelper.setColor(mPins[0], mPins[1], mPins[2], Color.BLACK);
+					I2CHelper.setPWM(mPins[3], 0);
+					mSlider.setValue(mSlider.getMinimum());
+				}
+			});
+
 			GridBagConstraints c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 1;
 			c.gridx = 0;
 			c.gridy = 3;
-			add(btn1, c);
-		}
-
-		{
-			JButton btn2 = new JButton("Licht aus");
-			btn2.addActionListener(this);
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.weightx = 1;
-			c.gridx = 1;
-			c.gridy = 3;
+			c.gridwidth = 2;
 			add(btn2, c);
 		}
 
 		{
 			JButton exit = new JButton("Zurück");
-
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.weightx = 0.4;
-			c.gridx = 2;
-			c.gridy = 3;
-			add(exit, c);
-
+			exit.setPreferredSize(new Dimension(0, 90));
+			exit.setFont(new Font("Serif", Font.PLAIN, 40));
+			
 			exit.addActionListener(new ActionListener() {
 
 				@Override
@@ -125,6 +150,13 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 					});
 				}
 			});
+
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.weightx = 0.4;
+			c.gridx = 2;
+			c.gridy = 3;
+			add(exit, c);
 		}
 
 	}

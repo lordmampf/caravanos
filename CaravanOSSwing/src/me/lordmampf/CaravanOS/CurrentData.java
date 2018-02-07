@@ -4,7 +4,7 @@ public class CurrentData {
 
 	public static int mCurrentLight = -1;
 
-	public static int[][] mConfigPins = { { 1, 2, 3, 4 }, { 13, 14, 15, 12 } };
+	public static int[][] mConfigPins = { { 1, 2, 3, 4 }, { 8, 9, 10, 11 }, { 12, 13, 14, 15 } };
 
 	public static String getCurrentTitle() {
 		return getTitle(mCurrentLight);
@@ -15,9 +15,11 @@ public class CurrentData {
 		default:
 			return "";
 		case 0:
-			return "Beleuchtung 1";
+			return "Schlafbereich";
 		case 1:
-			return "Beleuchtung 2";
+			return "Essbereich oben";
+		case 2:
+			return "Essbereich unten";
 
 		}
 
