@@ -68,14 +68,21 @@ public class I2CHelper {
 		return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 	}
 
-	public static void setPWM(int pPin, int pValue) {
+	public static void setPWM(int pPin, int pValue, int pMaxValue) {
 		if (pValue < 0 || pValue > 255)
 			return; //maybe exception
+		
+		if(pValue < 10)
+			pValue = 0;
 
 		if (pValue != 0)
-			pValue = map(pValue, 0, 255, 14, 25);
+			pValue = map(pValue, 0, 255, 14, pMaxValue);
 
 		mSendQueue.add(pPin + " " + pValue);
+	}
+
+	public static void setPWM(int pPin, int pValue) {
+		setPWM(pPin, pValue, 25);
 	}
 
 }

@@ -20,13 +20,13 @@ public class MenuPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JButton mButton1, mButton2, mButton3;
+	private JButton mButton1, mButton2, mButton3, mButton4;
 
 	private static final int mTextSize = 40;
 
 	public MenuPanel() {
 
-		GridLayout layout = new GridLayout(7, 1);
+		GridLayout layout = new GridLayout(8, 1);
 
 		setLayout((LayoutManager) layout);
 
@@ -40,16 +40,19 @@ public class MenuPanel extends JPanel implements ActionListener {
 		mButton1 = new JButton(CurrentData.getTitle(0));
 		mButton2 = new JButton(CurrentData.getTitle(1));
 		mButton3 = new JButton(CurrentData.getTitle(2));
+		mButton4 = new JButton(CurrentData.getTitle(3));
 		JButton exit = new JButton("Beenden");
 
 		mButton1.setFont(new Font("Serif", Font.PLAIN, mTextSize));
 		mButton2.setFont(new Font("Serif", Font.PLAIN, mTextSize));
 		mButton3.setFont(new Font("Serif", Font.PLAIN, mTextSize));
+		mButton4.setFont(new Font("Serif", Font.PLAIN, mTextSize));
 		exit.setFont(new Font("Serif", Font.PLAIN, mTextSize));
 
 		mButton1.addActionListener(this);
 		mButton2.addActionListener(this);
 		mButton3.addActionListener(this);
+		mButton4.addActionListener(this);
 
 		exit.addActionListener(new ActionListener() {
 			@Override
@@ -63,6 +66,7 @@ public class MenuPanel extends JPanel implements ActionListener {
 		add(mButton1);
 		add(mButton2);
 		add(mButton3);
+		add(mButton4);
 		add(Box.createHorizontalGlue());
 		add(exit);
 	}
@@ -74,6 +78,8 @@ public class MenuPanel extends JPanel implements ActionListener {
 			CurrentData.mCurrentLight = 1;
 		} else if (pActionEvent.getSource() == mButton3) {
 			CurrentData.mCurrentLight = 2;
+		} else if (pActionEvent.getSource() == mButton4) {
+			CurrentData.mCurrentLight = 3;
 		}
 
 		SwingUtilities.invokeLater(() -> {

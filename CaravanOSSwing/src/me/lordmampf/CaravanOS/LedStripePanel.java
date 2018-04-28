@@ -41,7 +41,7 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 			//			lbl.setMinimumSize(new Dimension(WIDTH, pHeight / 2));
 			lbl.setBackground(Color.RED);
 			//	lbl.setHorizontalAlignment(SwingConstants.CENTER);
-						
+
 			GridBagConstraints c = new GridBagConstraints();
 			c.anchor = GridBagConstraints.PAGE_START;
 			c.fill = GridBagConstraints.HORIZONTAL;
@@ -67,12 +67,12 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 		}
 
 		{
-
 			mSlider = new JSlider(JSlider.VERTICAL, 0, 255, 0);
 			mSlider.setPreferredSize(new Dimension(50, 0));
 			mSlider.addChangeListener(this);
 			mSlider.setMajorTickSpacing(10);
 			mSlider.setPaintTicks(true);
+			mSlider.setValue(CurrentData.mSliderValues[CurrentData.mCurrentLight]);
 
 			GridBagConstraints c = new GridBagConstraints();
 			c.anchor = GridBagConstraints.LINE_END;
@@ -139,7 +139,7 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 			JButton exit = new JButton("Zurück");
 			exit.setPreferredSize(new Dimension(0, 90));
 			exit.setFont(new Font("Serif", Font.PLAIN, 40));
-			
+
 			exit.addActionListener(new ActionListener() {
 
 				@Override
@@ -173,10 +173,9 @@ public class LedStripePanel extends JPanel implements ActionListener, ChangeList
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
-
 		int value = mSlider.getValue();
-		I2CHelper.setPWM(mPins[3], value);
-
+		I2CHelper.setPWM(mPins[3], value, 40);
+		CurrentData.mSliderValues[CurrentData.mCurrentLight] = value;
 	}
 
 }

@@ -17,6 +17,8 @@ public class Main {
 
 		System.out.println("init..");
 
+		CurrentData.loadConfig();
+
 		I2CHelper.init();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -33,7 +35,6 @@ public class Main {
 
 	private static void createAndShowGUI() {
 
-		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
@@ -41,16 +42,16 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		//Create and set up the window.
 		//	mMainFrame = new FullscreenFrame("CaravanOS");
 		//	mMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mMainFrame = new JFrame("CaravanOS");
-		
+
 		setPanel(new MenuPanel());
 	}
 
-	public static void setPanel(Component pPanel) {	
+	public static void setPanel(Component pPanel) {
 		mMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		mMainFrame.getContentPane().removeAll();
